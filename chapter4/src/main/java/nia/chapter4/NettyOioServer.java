@@ -39,6 +39,7 @@ public class NettyOioServer {
                                                 throws Exception {
                                             ctx.writeAndFlush(buf.duplicate())
                                                     .addListener(
+//                                                            回调函数
                                                             ChannelFutureListener.CLOSE);
                                         }
                                     });

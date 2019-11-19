@@ -37,6 +37,7 @@ public class NettyNioServer {
                                                               ChannelHandlerContext ctx) throws Exception {
                                                                 ctx.writeAndFlush(buf.duplicate())
                                                                   .addListener(
+//                                                                          回调函数，返回成功之后，关闭连接
                                                                           ChannelFutureListener.CLOSE);
                                                       }
                                                   });
