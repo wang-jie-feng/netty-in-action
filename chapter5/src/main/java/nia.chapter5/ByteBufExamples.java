@@ -3,6 +3,7 @@ package nia.chapter5;
 import io.netty.buffer.*;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.DummyChannelHandlerContext;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.ByteProcessor;
 
@@ -54,6 +55,7 @@ public class ByteBufExamples {
     private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE = DUMMY_INSTANCE;
     /**
      * Listing 5.1 Backing array
+     * 堆缓冲区 如果有数组支撑，那么就是堆缓冲区
      */
     public static void heapBuffer() {
         ByteBuf heapBuf = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere
@@ -67,6 +69,7 @@ public class ByteBufExamples {
 
     /**
      * Listing 5.2 Direct buffer data access
+     * 如果没有数组支撑，那么就是直接缓冲区
      */
     public static void directBuffer() {
         ByteBuf directBuf = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere
@@ -80,6 +83,8 @@ public class ByteBufExamples {
 
     /**
      * Listing 5.3 Composite buffer pattern using ByteBuffer
+     * 复合缓冲区
+     * 此版本使用ByteBuffer实现，效率低下且笨拙
      */
     public static void byteBufferComposite(ByteBuffer header, ByteBuffer body) {
         // Use an array to hold the message parts
@@ -96,6 +101,8 @@ public class ByteBufExamples {
 
     /**
      * Listing 5.4 Composite buffer pattern using CompositeByteBuf
+     * 使用CompositeByteBuf实现的复合缓冲区模式
+     * 此实现要比之前使用ByteBuffer的高效且轻巧
      */
     public static void byteBufComposite() {
         CompositeByteBuf messageBuf = Unpooled.compositeBuffer();
@@ -114,14 +121,17 @@ public class ByteBufExamples {
      */
     public static void byteBufCompositeArray() {
         CompositeByteBuf compBuf = Unpooled.compositeBuffer();
+//        可读区域
         int length = compBuf.readableBytes();
         byte[] array = new byte[length];
         compBuf.getBytes(compBuf.readerIndex(), array);
+//        返回一个数组
         handleArray(array, 0, array.length);
     }
 
     /**
      * Listing 5.6 Access data
+     * 使用索引来遍历数组
      */
     public static void byteBufRelativeAccess() {
         ByteBuf buffer = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere
@@ -156,6 +166,7 @@ public class ByteBufExamples {
      * Listing 5.9 Using ByteProcessor to find \r
      *
      * use {@link io.netty.buffer.ByteBufProcessor in Netty 4.0.x}
+     * 匹配 \r
      */
     public static void byteProcessor() {
         ByteBuf buffer = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere

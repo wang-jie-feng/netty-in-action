@@ -52,6 +52,7 @@ public class EchoServer {
             ChannelFuture f = b.bind().sync();
             System.out.println(EchoServer.class.getName() +
                 " started and listening for connections on " + f.channel().localAddress());
+//            保持阻塞，一直到被调用成功之后
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();

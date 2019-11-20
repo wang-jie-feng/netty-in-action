@@ -27,6 +27,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelReadComplete(ChannelHandlerContext ctx)
             throws Exception {
         ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
+//                返回一个ChannelFuture同时添加一个异步通知接口，可以对于io成功与否进行通知
                 .addListener(ChannelFutureListener.CLOSE);
     }
 
