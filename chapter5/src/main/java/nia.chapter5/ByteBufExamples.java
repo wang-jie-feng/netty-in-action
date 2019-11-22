@@ -252,6 +252,7 @@ public class ByteBufExamples {
 
     /**
      * Listing 5.15 Reference counting
+     * 设置引用计数，引用计数主要用来判断是否要释放资源，可以优化资源配置
      * */
     public static void referenceCounting(){
         Channel channel = CHANNEL_FROM_SOMEWHERE; //get reference form somewhere
@@ -264,6 +265,7 @@ public class ByteBufExamples {
 
     /**
      * Listing 5.16 Release reference-counted object
+     * 如果引用计数减少到0的话，就可以直接释放了
      */
     public static void releaseReferenceCountedObject(){
         ByteBuf buffer = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere
